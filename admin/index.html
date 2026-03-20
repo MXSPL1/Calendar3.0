@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>High Park Sur 2702 Admin</title>
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body>
+    <div class="admin-app">
+      <header class="admin-header">
+        <div>
+          <p class="admin-header__eyebrow">Private Dashboard</p>
+          <h1>High Park Sur 2702</h1>
+        </div>
+        <button id="logout-button" class="ghost-button" hidden>Log Out</button>
+      </header>
+
+      <main class="admin-main">
+        <section id="login-view" class="panel login-panel">
+          <div class="panel__header">
+            <p class="panel__eyebrow">Admin Login</p>
+            <h2>Enter Your Credentials</h2>
+            <p>Only authorized administrators can access booking requests and day controls.</p>
+          </div>
+
+          <form id="login-form" class="stack">
+            <label class="field">
+              <span>Username</span>
+              <input name="username" type="text" autocomplete="username" required />
+            </label>
+            <label class="field">
+              <span>Password</span>
+              <input name="password" type="password" autocomplete="current-password" required />
+            </label>
+            <button type="submit" class="primary-button">Log In</button>
+            <p id="login-feedback" class="feedback"></p>
+          </form>
+        </section>
+
+        <section id="dashboard-view" hidden>
+          <section class="panel notifications-panel">
+            <div class="panel__header">
+              <p class="panel__eyebrow">Notifications</p>
+              <h2>Latest Unread Requests</h2>
+              <p id="notification-summary">Loading notifications...</p>
+            </div>
+            <div id="notification-list" class="notification-list"></div>
+          </section>
+
+          <div class="dashboard-grid">
+            <section class="panel calendar-panel">
+              <div class="calendar-panel__header">
+                <div>
+                  <p class="panel__eyebrow">Administration</p>
+                  <h2>Calendar Management</h2>
+                </div>
+                <div class="calendar-nav">
+                  <button id="previous-month" class="ghost-button" type="button">Previous</button>
+                  <p id="calendar-month-label" class="calendar-month-label"></p>
+                  <button id="next-month" class="ghost-button" type="button">Next</button>
+                </div>
+              </div>
+
+              <div class="calendar-legend">
+                <span><i class="swatch swatch--open"></i>Open</span>
+                <span><i class="swatch swatch--closed"></i>Closed</span>
+                <span><i class="swatch swatch--pending"></i>Pending request</span>
+              </div>
+
+              <div id="admin-calendar" class="admin-calendar" aria-live="polite"></div>
+            </section>
+
+            <aside class="sidebar">
+              <section class="panel">
+                <div class="panel__header">
+                  <p class="panel__eyebrow">Selected Day</p>
+                  <h2>Day Administration</h2>
+                  <p>Select a day from the calendar to open, close, price, or assign guest details.</p>
+                </div>
+
+                <form id="day-form" class="stack">
+                  <label class="field">
+                    <span>Date</span>
+                    <input id="day-date" name="date" type="date" required />
+                  </label>
+                  <label class="field">
+                    <span>Status</span>
+                    <select id="day-status" name="status">
+                      <option value="open">Open</option>
+                      <option value="closed">Closed</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span>Price</span>
+                    <input id="day-price" name="price" type="number" min="0" step="1" required />
+                  </label>
+                  <label class="field">
+                    <span>Guest Name</span>
+                    <input id="day-guest-name" name="guestName" type="text" />
+                  </label>
+                  <label class="field">
+                    <span>Guest Email</span>
+                    <input id="day-guest-email" name="guestEmail" type="email" />
+                  </label>
+                  <label class="field">
+                    <span>Guest Phone</span>
+                    <input id="day-guest-phone" name="guestPhone" type="tel" />
+                  </label>
+                  <label class="field">
+                    <span>Notes</span>
+                    <textarea id="day-notes" name="notes" rows="3"></textarea>
+                  </label>
+                  <button type="submit" class="primary-button">Save Day</button>
+                  <p id="day-feedback" class="feedback"></p>
+                </form>
+              </section>
+
+              <section class="panel">
+                <div class="panel__header">
+                  <p class="panel__eyebrow">Request Inbox</p>
+                  <h2>Booking Requests</h2>
+                  <p>Review pending reservations, mark them read, and accept or reject stays.</p>
+                </div>
+
+                <div id="request-list" class="request-list"></div>
+
+                <div id="request-detail" class="request-detail">
+                  <p class="feedback">Select a request to review its details.</p>
+                </div>
+              </section>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./admin.js"></script>
+  </body>
+</html>

@@ -1,59 +1,43 @@
-# Apartment Booking Calendar Frontend
+# Apartment Booking Calendar System
 
-This workspace contains the public booking calendar frontend for the apartment rental website.
+This workspace now contains a complete shared calendar system:
+
+- a public booking calendar for guests
+- a private admin dashboard
+- a shared SQLite database and API server that connect both apps
 
 ## Files
 
-- `index.html`: standalone demo page that shows the calendar in an embeddable page section.
-- `src/calendar-widget.js`: reusable calendar widget with range selection, pricing display, and booking request form.
-- `src/calendar-widget.css`: styling for the calendar and modal form.
-- `src/demo-data.js`: mock availability and price data used until the admin side is connected.
-- `src/demo.js`: demo bootstrap that instantiates the widget.
+- `index.html`: public calendar page for guests
+- `src/calendar-widget.js`: reusable public calendar widget
+- `src/calendar-widget.css`: public calendar styles
+- `src/demo.js`: public app bootstrap that talks to the backend
+- `src/demo-data.js`: seed data used to initialize the database
+- `admin/index.html`: admin dashboard page
+- `admin/admin.js`: admin dashboard logic
+- `admin/admin.css`: admin dashboard styles
+- `server.js`: Node server, API, session auth, and shared SQLite database setup
 
 ## Current behavior
 
-- Shows two months at a time.
-- Supports continuous stay selection only.
-- Prevents selection across closed dates.
-- Displays a nightly price on each open date.
-- Opens a request form after the user chooses a valid range.
-- Stops navigation at December 2026.
+- Guests can browse two months at a time and submit booking requests.
+- The public calendar reads open/closed days and prices from the shared database.
+- Admin can log in, review unread requests, accept/reject them, and edit any day.
+- Accepted requests automatically close the selected dates in the public calendar.
+- Manual admin changes to price or open/closed status also flow into the public calendar.
 
-## Future admin integration
+## Admin credentials
 
-The widget is already prepared for the admin side later:
+Admin credentials now come from environment variables only.
 
-1. Replace the mock `availability` array with data loaded from the admin/backend system.
-2. Replace the demo `onSubmit` function with a real request to save the booking inquiry.
+For local development, create a `.env` file in the project root:
 
-Expected availability shape:
-
-```js
-[
-  { date: "2026-03-17", status: "open", price: 235 },
-  { date: "2026-03-18", status: "closed", price: 235 }
-]
+```bash
+ADMIN_USERNAME=HPS2702
+ADMIN_PASSWORD=Kamila2702
 ```
 
-Submission payload shape:
-
-```js
-{
-  stay: {
-    startDate: "2026-03-17",
-    endDate: "2026-03-20",
-    selectedDates: ["2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20"],
-    totalDays: 4,
-    totalPrice: 940
-  },
-  guest: {
-    name: "Guest Name",
-    phone: "123-456-7890",
-    email: "guest@example.com",
-    comments: "Optional notes"
-  }
-}
-```
+For production, set these same values in your hosting provider's environment variable settings.
 
 ## Run locally
 
@@ -61,4 +45,7 @@ Submission payload shape:
 npm start
 ```
 
-Then open `http://localhost:4173`.
+Then open:
+
+- Public calendar: `http://localhost:4173`
+- Admin dashboard: `http://localhost:4173/admin/`
